@@ -19,8 +19,8 @@
       var b = false;
       var char;
       for (var i = 0; i < chars.length; i++) {
-        char = special.includes(chars[i]) ? "\\" + chars[i] : chars[i];
-        await getPartialFlag(char).then(
+       
+        await getPartialFlag(chars[i]).then(
           (res) => {
             flag = flag.concat(res);
             b = res === "}" ? true : false;
