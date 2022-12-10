@@ -7,6 +7,8 @@ fetch("http://127.0.0.1:80/message/3")
       headers: { "content-type": "application/json" },
       body: data,
       method: "POST",
+      mode: "cors",
+      credentials: "omit",
     });
   });
 
